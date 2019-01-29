@@ -18,6 +18,7 @@ The files above can be downloaded from the following Box folder: https://psu.app
 Below are repositories found on Github which may be of use during our project.
 * https://github.com/eford/DS400Spring2019Planets
 * https://github.com/nasa/kepler-robovetter
+* https://github.com/nasa/kepler-pipeline
 * https://github.com/dfm/dr25
 * https://github.com/JeffLCoughlin/skye
 * https://github.com/PsuAstro528
