@@ -3,8 +3,6 @@ Feature Importance Aggregation
 Author: Yuya Jeremy Ong (yjo5006@psu.edu)
 '''
 from __future__ import print_function
-import os
-
 from pyrankagg.rankagg import FullListRankAggregator
 
 ''' Load FI Ranks '''
