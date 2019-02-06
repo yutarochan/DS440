@@ -1,0 +1,11 @@
+{
+    "model": "baseline",
+    "out_dir": "log/",
+
+    "mode": "train",
+
+    "dataset": {
+        "plti": "data/raw/plti/kplr_dr25_inj1_plti.txt",
+        "noise": "data/raw/misc/DR25_DEModel_NoisyTargetList.txt"
+    }
+}

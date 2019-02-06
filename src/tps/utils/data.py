@@ -12,12 +12,17 @@ warnings.filterwarnings("ignore")
 class DataLoader:
     def __init__(self, filename):
         self.filename = filename
+        self.config = None          # Integrate with Configuration File
 
     def load_data(self):
         # Load Raw Data
         raw_data = ascii.read(self.filename)
         df = raw_data.to_pandas()
+
+        # Data Imputation Process
         df.dropna()
+
+        # Append PCA Features
 
         X, y = self.preprocess(df)
 

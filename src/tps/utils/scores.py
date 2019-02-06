@@ -1,7 +1,6 @@
 '''
 Scoring Auxilary Function
 Class to help provide organize method to keep track of scores and report them.
-
 Author: Yuya Jeremy Ong (yjo5006@psu.edu)
 '''
 from __future__ import print_function
@@ -15,7 +14,7 @@ from sklearn import metrics as met
 class ScoreReport:
     def __init__(self, model_name, output_dir='./'):
         # Generate Directory for Score Report
-        self.output_dir = output_dir + model_name.replace(' ', '_').lower()
+        self.output_dir = output_dir + '/' + model_name.replace(' ', '_').lower()
         if not os.path.exists(self.output_dir): os.makedirs(self.output_dir)
 
         self.acc_list = []      # Accuracy List
