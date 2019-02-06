@@ -11,6 +11,7 @@ from utils.config import *
 
 def main():
     # Parse CLI Arguments
+    # TODO: Make it parsable for a fixed model...
     parser = argparse.ArgumentParser(description='TPC Pipeline Efficiency Classification Pipeline')
     parser.add_argument('config', metavar='confg_json_file', default=None, help='File path to the configuration file.')
     args = parser.parse_args()
