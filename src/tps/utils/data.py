@@ -29,8 +29,12 @@ class DataLoader:
         print('>> Load Dataset: ' + self.plti)
         raw_data = ascii.read(self.plti)
         df = raw_data.to_pandas()
-
         print(' > Data Shape: ' + str(df.shape))
+
+        # TODO: Check Recovered Output Value???? (for 2?)
+        # df = df[df.Recovered != 2]
+
+        if self.config.data['drop_noise']: df = self._drop_noisy(df)
 
         # Extract Key Features
         print('>> Extract Features & Targets')
@@ -46,8 +50,9 @@ class DataLoader:
         if self.config.data['ifs']: X = self._impute(X)
         if self.config.data['pca']: X = self._compute_pca(X)
 
-        # TODO: Check Recovered Output Value???? (for 2?)
-        # df = df[df.Recovered != 2]
+        print('>> Final Feature Dimensions')
+        print(' > X (shape): ' + str(X.shape))
+        print(' > y (shape): ' + str(y.shape))
 
         return X, y
 
@@ -62,6 +67,7 @@ class DataLoader:
                 X[c] = X[c].fillna(-999)
                 rscaler = StandardScaler()
                 X[c] = rscaler.fit_transform(X[c].values.reshape(-1,1))
+
         return X
 
     def _compute_pca(self, X):
@@ -76,10 +82,14 @@ class DataLoader:
 
         return X_all
 
-    def drop_noisy(self, df):
-        drop_id = open('data/raw/misc/DR25_DEModel_NoisyTargetList.txt', 'r').read().split('\n')[10:-1]
-        drop_id = list(map(lambda x: str(x.replace('\n', '').strip()), drop_id))
-        df.drop(drop_id[:10])
+    def _drop_noisy(self, df):
+        # FIXME: Issue with finding and dropping IDs...
+        print (">> Drop Noisy KIC Sets")
+        drop_id = open(self.config.data['noise'], 'r').read().split('\n')[10:-1]
+        drop_id = list(map(lambda x: int(x.replace('\n', '').strip()), drop_id))
+        for d in drop_id:
+            if int(d) in df.KIC_ID: df.drop(d)
+        print(' > Data Shape: ' + str(df.shape))
         return df
 
     def extract_features(self, df):

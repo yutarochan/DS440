@@ -10,6 +10,7 @@
             "i_dur", "i_b", "i_ror", "i_dor"],
 
         "ifs": true,
-        "pca": true
+        "pca": true,
+        "drop_noise": true
     }
 }

@@ -25,7 +25,7 @@ def main():
     X, y = dl.load_data()
 
     # Initialize Model Agent
-    # agent = eval(config.agent).Agent(config)
+    agent = eval(config.agent).Agent(config)
     # agent.run()
     # agent.finalize()
 
