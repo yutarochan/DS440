@@ -10,7 +10,7 @@ echo "[Dataset Environment Setup]\n"
 echo "> Generating Directories"
 mkdir -p data
 mkdir -p data/raw/
-mkdir -p data/preproc/
+mkdir -p data/eda/
 
 # Download KPLR DR25 PLTI Injected Dataset
 echo "> Downloading: KPLR DR25 PLTI Injected Dataset"

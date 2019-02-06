@@ -14,6 +14,11 @@ q1q17_dr25_gaia_fgk.csv
 
 The files above can be downloaded from the following Box folder: https://psu.app.box.com/v/ds400spring2019planets
 
+## Dependencies
+The following additional dependencies must be installed to use any of the software written for this project:
+* https://github.com/thelahunginjeet/pyrankagg
+* https://github.com/thelahunginjeet/kbutil
+
 ## Useful Repositories
 Below are repositories found on Github which may be of use during our project.
 * https://github.com/eford/DS400Spring2019Planets
