@@ -2,10 +2,14 @@
     "model": "baseline",
     "out_dir": "log/",
 
-    "mode": "train",
-
-    "dataset": {
+    "data": {
         "plti": "data/raw/plti/kplr_dr25_inj1_plti.txt",
-        "noise": "data/raw/misc/DR25_DEModel_NoisyTargetList.txt"
+        "noise": "data/raw/misc/DR25_DEModel_NoisyTargetList.txt",
+
+        "features": ["Sky_Group", "i_period", "i_epoch", "N_Transit", "i_depth",
+            "i_dur", "i_b", "i_ror", "i_dor"],
+
+        "ifs": true,
+        "pca": true
     }
 }

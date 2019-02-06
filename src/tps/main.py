@@ -20,14 +20,9 @@ def main():
     # Parse Configuration File
     config, logger = parse_config(args.config)
 
-    '''
     # Load Data
-    # TODO: Just pass in the config and handle parameter parsing internally.
-    print ("-" * 100)
-    print ("Load Dataset")
-    dl = DataLoader('data/raw/plti/kplr_dr25_inj1_plti.txt')
+    dl = DataLoader(config)
     X, y = dl.load_data()
-    '''
 
     # Initialize Model Agent
     # agent = eval(config.agent).Agent(config)

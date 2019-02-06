@@ -56,8 +56,7 @@ def parse_config(json_file):
         exit(-1)
 
     # Display Configuration Setting
-    print("[Configuration Parameters]\n")
+    print("[Configuration Parameters]")
     pprint(config)
-    print('-'*80)
 
     return config, logger
