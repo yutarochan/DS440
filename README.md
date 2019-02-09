@@ -15,6 +15,13 @@ q1q17_dr25_gaia_fgk.csv
 The files above can be downloaded from the following Box folder: https://psu.app.box.com/v/ds400spring2019planets
 
 ## Dependencies
+To execute the codebase for this project, you can run the following command in your terminal to obtain the
+latest dependencies necessary for this project.
+
+```
+pip3 install -r requirements.txt
+```
+
 The following additional dependencies must be installed to use any of the software written for this project:
 * https://github.com/thelahunginjeet/pyrankagg
 * https://github.com/thelahunginjeet/kbutil
@@ -27,3 +34,4 @@ Below are repositories found on Github which may be of use during our project.
 * https://github.com/dfm/dr25
 * https://github.com/JeffLCoughlin/skye
 * https://github.com/PsuAstro528
+* https://github.com/KeplerGO/lightkurve
