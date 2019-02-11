@@ -1,0 +1,15 @@
+{
+    "model": "logreg",
+    "out_dir": "log",
+
+    "data": {
+        "plti": "data/raw/plti/kplr_dr25_inj1_plti.txt",
+        "noise": "data/raw/misc/DR25_DEModel_NoisyTargetList.txt",
+
+        "features": ["Sky_Group", "i_period", "i_epoch", "N_Transit", "i_depth", "i_dur", "i_b", "i_ror", "i_dor", "Expected_MES"],
+
+        "ifs": true,
+        "pca": true,
+        "drop_noise": false
+    }
+}
