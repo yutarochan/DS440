@@ -35,3 +35,11 @@ Below are repositories found on Github which may be of use during our project.
 * https://github.com/JeffLCoughlin/skye
 * https://github.com/PsuAstro528
 * https://github.com/KeplerGO/lightkurve
+* https://github.com/r-cloutier/KeplerM
+* https://github.com/eford/ExoplanetsSysSim.jl
+* https://github.com/mustaric/keplerpublicIO
+* https://github.com/farr/KeplerContam
+* https://github.com/megbedell/gaia-kepler.fun
+* https://github.com/mustaric/dr25CatalogGen
+* https://github.com/bmorris3/cks_spots
+* https://github.com/PALuczak/BusinessIntelligence
