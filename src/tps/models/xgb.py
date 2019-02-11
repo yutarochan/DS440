@@ -6,7 +6,7 @@ from __future__ import print_function
 import sys
 import numpy as np
 from scipy import stats
-import xgboost as xgb
+from xgboost import XGBClassifier
 from sklearn.model_selection import KFold
 
 from models.base import BaseAgent
@@ -46,11 +46,11 @@ class Agent(BaseAgent):
     def train_model(self, X, y):
         # XGB Parameters
         xgb_params = {
-            'eta': 0.003,                   # 0.01
-            'max_depth': 13,                # 6
+            'eta': 0.01,                   # 0.01
+            'max_depth': 6,                # 6
             'min_child_weight': 1,
-            'subsample': 0.90,              # 0.80
-            'objective': 'reg:logistic',
+            'subsample': 0.80,              # 0.80
+            'objective': 'binary:logitraw',
             'colsample_bytree': 0.50,
             'scale_pos_weight': 2,
             'eval_metric': 'auc',
@@ -60,16 +60,17 @@ class Agent(BaseAgent):
             'silent': 1
         }
 
-        xgb_train = xgb.DMatrix(X, y)
-        model = xgb.train(xgb_params, xgb_train)
+        model = XGBClassifier()
+        # xgb_train = xgb.DMatrix(X, y)
+        # model = xgb.train(xgb_params, xgb_train)
+        model.fit(X, y)
         return model
 
     def validate_model(self, model, X, y):
-        xgb_valid = xgb.DMatrix(X)
-        y_prob = model.predict(xgb_valid)
-        y_binary = [0 if p <= 0.5 else 1 for p in y_prob]
+        y_prob = model.predict_proba(X)
+        y_binary = [0 if p[1] <= 0.5 else 1 for p in y_prob]
 
-        return y, y_binary, y_prob
+        return y, y_binary, y_prob[:, 1]
 
     def finalize(self):
         # Finalize Report
