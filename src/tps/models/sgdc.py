@@ -1,13 +1,13 @@
 '''
-Support Vector Classifier Model Agent
+Stochastic Gradient Descent Classifier Model Agent
 Author: Yuya Jeremy Ong (yjo5006@psu.edu)
 '''
 from __future__ import print_function
 import sys
 import numpy as np
 from scipy import stats
-from sklearn.svm import SVC
 from sklearn.model_selection import KFold
+from sklearn.linear_model import SGDClassifier
 
 from models.base import BaseAgent
 from utils.data import DataLoader
@@ -44,7 +44,7 @@ class Agent(BaseAgent):
             self.report.append_result(y_actual, y_binary, y_prob)
 
     def train_model(self, X, y):
-        model = SVC(kernel='linear', probability=True)
+        model = SGDClassifier(loss="log", penalty="l2", max_iter=100)
         model.fit(X, y)
         return model
 
