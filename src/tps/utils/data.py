@@ -31,8 +31,12 @@ class DataLoader:
         df = raw_data.to_pandas()
         print(' > Data Shape: ' + str(df.shape))
 
+        # Drop NA Data
+        df.dropna()
+
         # TODO: Check Recovered Output Value???? (for 2?)
         # df = df[df.Recovered != 2]
+        df = df.replace(2, 1)
 
         if self.config.data['drop_noise']: df = self._drop_noisy(df)
 
@@ -87,8 +91,10 @@ class DataLoader:
         print (">> Drop Noisy KIC Sets")
         drop_id = open(self.config.data['noise'], 'r').read().split('\n')[10:-1]
         drop_id = list(map(lambda x: int(x.replace('\n', '').strip()), drop_id))
+
+        # print(drop_id[0])
         for d in drop_id:
-            if int(d) in df.KIC_ID: df.drop(d)
+            if d in df.KIC_ID: df.drop(d)
         print(' > Data Shape: ' + str(df.shape))
         return df
 

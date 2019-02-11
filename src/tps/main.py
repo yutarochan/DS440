@@ -20,14 +20,10 @@ def main():
     # Parse Configuration File
     config, logger = parse_config(args.config)
 
-    # Load Data
-    dl = DataLoader(config)
-    X, y = dl.load_data()
-
     # Initialize Model Agent
-    agent = eval(config.agent).Agent(config)
-    # agent.run()
-    # agent.finalize()
+    agent = eval(config.model).Agent(config, logger)
+    agent.run()
+    agent.finalize()
 
 if __name__ == '__main__':
     main()
