@@ -1,5 +1,5 @@
 '''
-Logistic Regression Model Agent
+Bernoulli Naive Bayes Model Agent
 Author: Yuya Jeremy Ong (yjo5006@psu.edu)
 '''
 from __future__ import print_function
@@ -7,7 +7,7 @@ import sys
 import numpy as np
 from scipy import stats
 from sklearn.model_selection import KFold
-from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import BernoulliNB
 
 from models.base import BaseAgent
 from utils.data import DataLoader
@@ -42,7 +42,7 @@ class Agent(BaseAgent):
             self.report.append_result(y_actual, y_binary, y_prob)
 
     def train_model(self, X, y):
-        model = LogisticRegression(random_state=0, solver='lbfgs', multi_class='ovr')
+        model = BernoulliNB()
         model.fit(X, y)
         return model
 

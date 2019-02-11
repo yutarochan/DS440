@@ -12,9 +12,9 @@ import matplotlib.pyplot as plt
 from sklearn import metrics as met
 
 class ScoreReport:
-    def __init__(self, model_name, output_dir='./'):
+    def __init__(self, run_id, model_name, output_dir='./'):
         # Generate Directory for Score Report
-        self.output_dir = output_dir + '/' + model_name.replace(' ', '_').lower()
+        self.output_dir = output_dir + '/' + run_id.replace(' ', '_').lower()
         if not os.path.exists(self.output_dir): os.makedirs(self.output_dir)
 
         self.acc_list = []      # Accuracy List

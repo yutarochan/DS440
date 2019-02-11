@@ -39,7 +39,7 @@ def parse_config(json_file):
         if not os.path.exists(config.output_dir): os.makedirs(config.output_dir)
 
         # Initialize Metric Logging Object
-        logger = ScoreReport(config.uuid, config.output_dir)
+        logger = ScoreReport(config.uuid, config.model, config.output_dir)
         config.output_dir = config.output_dir + '/' + config.uuid
 
         # Save Configuration File Under Log Directory
