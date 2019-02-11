@@ -3,6 +3,7 @@ Baseline Model Agent
 Author: Yuya Jeremy Ong (yjo5006@psu.edu)
 '''
 from __future__ import print_function
+import sys
 import numpy as np
 from scipy import stats
 from sklearn.model_selection import KFold
@@ -18,7 +19,7 @@ class GammaModel:
         self.c = c
 
     def pred(self, X):
-        return self.a * stats.gamma.cdf(X, self.b, scale=self.c)
+        return self.c * stats.gamma.cdf(X, a=self.a, scale=self.b)
 
 class Agent(BaseAgent):
     def __init__(self, config, logger):
@@ -56,7 +57,15 @@ class Agent(BaseAgent):
 
     def validate_model(self, model, X, y):
         y_prob = model.pred(X)
-        y_binary = [0 if p <= 0.5 else 1 for p in y_prob]
+        y_binary = [0 if p <= 0.271 else 1 for p in y_prob]
+
+        '''
+        print(y_prob[:10])
+        print(y_binary[:10])
+        print(y[:10])
+
+        sys.exit()
+        '''
 
         return y, y_binary, y_prob
 

@@ -9,7 +9,7 @@
         "features": ["Expected_MES"],
 
         "ifs": true,
-        "pca": true,
+        "pca": false,
         "drop_noise": false
     },
 
