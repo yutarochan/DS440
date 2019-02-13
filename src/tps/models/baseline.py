@@ -19,7 +19,8 @@ class GammaModel:
         self.c = c
 
     def pred(self, X):
-        return self.c * stats.gamma.cdf(X, a=self.a, scale=self.b)
+        #return stats.gamma.cdf(X, a=self.a)
+        return stats.gamma.cdf(X, a=self.a, scale=self.c)
 
 class Agent(BaseAgent):
     def __init__(self, config, logger):
@@ -57,7 +58,7 @@ class Agent(BaseAgent):
 
     def validate_model(self, model, X, y):
         y_prob = model.pred(X)
-        y_binary = [0 if p <= 0.271 else 1 for p in y_prob]
+        y_binary = [0 if p <= 0.50 else 1 for p in y_prob]
 
         '''
         print(y_prob[:10])
