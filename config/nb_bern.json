@@ -9,7 +9,7 @@
         "features": ["Sky_Group", "i_period", "i_epoch", "N_Transit", "i_depth", "i_dur", "i_b", "i_ror", "i_dor", "Expected_MES"],
 
         "ifs": true,
-        "pca": true,
+        "pca": false,
         "drop_noise": false
     },
 
