@@ -1,5 +1,5 @@
 {
-    "model": "nb_bern",
+    "model": "catboost",
     "out_dir": "log",
 
     "data": {
@@ -11,7 +11,5 @@
         "ifs": true,
         "pca": false,
         "drop_noise": false
-    },
-
-    "nb_type": "gaussian"
+    }
 }
