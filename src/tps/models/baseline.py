@@ -23,20 +23,12 @@ class GammaModel:
         self.c = c
 
     def pred(self, X):
-<<<<<<< HEAD
-        return stats.gamma.cdf(X, a=0.0498630668989, loc=-1.87930660979e-26, scale=3.08179479068)
-        # return (1/self.b) * stats.gamma.cdf(X, a=self.c)
-=======
-
         predList = []
         for x in X:
             pred = self.c * quad(integrand, 0, x, args=(self.a, self.b))[0] / ((self.b ** self.a) * np.random.gamma(self.a))
             predList.append(pred)
 
         return predList
-
-
->>>>>>> 728f3a1c4ef70a4bbda6810a7dde09032515da18
 
 class Agent(BaseAgent):
     def __init__(self, config, logger):
@@ -75,18 +67,6 @@ class Agent(BaseAgent):
     def validate_model(self, model, X, y):
         y_prob = model.pred(X)
         y_binary = [0 if p <= 0.5 else 1 for p in y_prob]
-<<<<<<< HEAD
-=======
-
-        '''
-        print(y_prob[:10])
-        print(y_binary[:10])
-        print(y[:10])
-
-        sys.exit()
-        '''
->>>>>>> 728f3a1c4ef70a4bbda6810a7dde09032515da18
-
         return y, y_binary, y_prob
 
     def finalize(self):
