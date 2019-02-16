@@ -36,15 +36,22 @@ np.random.seed(9892)
 # Load Dataset
 print ("-" * 100)
 print ("Load Training File")
-data = ascii.read('data/raw/plti/kplr_dr25_inj1_plti.txt').to_pandas()
+data = pd.read_csv('data/feat_eng/plti_add_numeric.csv')
+data_2 = ascii.read('data/raw/plti/kplr_dr25_inj1_plti.txt').to_pandas()
+
+data['Recovered'] = data_2['Recovered']
 
 # Separate Features and Target Values
 print ("-" * 100)
 print ("Set X Features and y Target")
 feat = ['Sky_Group', 'i_period', 'i_epoch', 'N_Transit', 'i_depth', 'i_dur', 'i_b', 'i_ror', 'i_dor', 'Expected_MES']
 y = data['Recovered'].values
-X = data[feat]
+
+data.drop(columns=['Recovered'])
+X = data
 names = X.columns
+
+print(X.head())
 
 # Perform Data Imputation and PCA Computations
 print ("-" * 100)
@@ -67,9 +74,9 @@ del data; gc.collect()
 print ("-" * 100)
 print ("Compute for the PCA Components and Add into Data Set")
 # PCA --> 85% = 13 | 90% = 26 | 95% = 57
-pca = PCA(n_components=10)
+pca = PCA(n_components=X.shape[1])
 X_pca = pd.DataFrame(pca.fit_transform(X))
-X_pca.columns = ['pca1','pca2','pca3','pca4','pca5','pca6','pca7', 'pca8','pca9','pca10']
+X_pca.columns = ['pca'+str(i) for i in range(1, X.shape[1]+1)]
 names = names.append(X_pca.columns)
 X_all = pd.concat([X, X_pca], axis=1)
 
