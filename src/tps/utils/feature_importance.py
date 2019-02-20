@@ -36,7 +36,7 @@ np.random.seed(9892)
 # Load Dataset
 print ("-" * 100)
 print ("Load Training File")
-data = pd.read_csv('data/feat_eng/plti_add_numeric.csv')
+data = pd.read_csv('data/features/plti_add_numeric.csv')
 data_2 = pd.reac_csv('data/raw/plti/kplr_dr25_inj1_plti.csv')
 # data_2 = ascii.read('data/raw/plti/kplr_dr25_inj1_plti.txt').to_pandas()
 
@@ -108,7 +108,7 @@ for n_algo in ['rfr','ada','ext','gbm','rte']:
     print ('       Save:', n_algo)
     fi = sorted(zip(map(lambda x: round(x, 4), fi_model.feature_importances_), names), reverse=True)
     df_fi = pd.DataFrame.from_records(fi)
-    df_fi.to_csv('data/eda/plti/_' + n_algo + '_feature_importance.csv', sep=',')
+    df_fi.to_csv('data/feat_eng/plti/_' + n_algo + '_feature_importance.csv', sep=',')
 
 print ("-" * 100)
 print ("Perform Chi^2 Feature Selection and Save Results to File")
@@ -119,7 +119,7 @@ sel.transform(train_x2)
 df_univ = pd.DataFrame()
 df_univ["feature"] = [x for x in names]
 df_univ["score"] = [x**(1/2) for x in sel.scores_]
-df_univ.to_csv("data/eda/plti/_uni_feature_importance.csv", index=False)
+df_univ.to_csv("data/feat_eng/plti/_uni_feature_importance.csv", index=False)
 
 print ("-" * 100)
 print ("Perform Lasso Feature Selection and Save Results to File")
@@ -131,7 +131,7 @@ print ("   --> After Lasso Selection: %i" % lasso_sel.shape[1])
 df_lasso = pd.DataFrame()
 df_lasso["feature"] = [x for x in names]
 df_lasso["include"] = [1 if x==True else 0 for x in sel.get_support()]
-df_lasso.to_csv("data/eda/plti/_las_feature_selection.csv", index=False)
+df_lasso.to_csv("data/feat_eng/plti/_las_feature_selection.csv", index=False)
 
 print ("-" * 100)
 t1 = time.time()
