@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import datetime as dt
 import gc; gc.enable()
-from astropy.io import ascii
+# from astropy.io import ascii
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -37,7 +37,8 @@ np.random.seed(9892)
 print ("-" * 100)
 print ("Load Training File")
 data = pd.read_csv('data/feat_eng/plti_add_numeric.csv')
-data_2 = ascii.read('data/raw/plti/kplr_dr25_inj1_plti.txt').to_pandas()
+data_2 = pd.reac_csv('data/raw/plti/kplr_dr25_inj1_plti.csv')
+# data_2 = ascii.read('data/raw/plti/kplr_dr25_inj1_plti.txt').to_pandas()
 
 data['Recovered'] = data_2['Recovered']
 
