@@ -17,6 +17,8 @@ class ScoreReport:
         self.output_dir = output_dir + '/' + run_id.replace(' ', '_').lower()
         if not os.path.exists(self.output_dir): os.makedirs(self.output_dir)
 
+        self.rmse_list = []     # RMSE List
+        self.logloss_list = []  # Log Loss List
         self.acc_list = []      # Accuracy List
         self.tpr_list = []      # True Positive Rate List
         self.fpr_list = []      # False Positive Rate List
@@ -47,6 +49,8 @@ class ScoreReport:
         self.rec_list.append(met.recall_score(y_true, y_pred))
         self.kappa_list.append(met.cohen_kappa_score(y_true, y_pred))
 
+        self.rmse_list.append(met.mean_squared_error(y_true, y_pred))
+        self.logloss_list.append(met.log_loss(y_true, y_pred))
         self.acc_list.append(met.accuracy_score(y_true, y_pred))
         self.f1_list.append(met.f1_score(y_true, y_pred, pos_label=1))
         self.avg_conf += np.array(met.confusion_matrix(y_true, y_pred))
@@ -68,10 +72,12 @@ class ScoreReport:
         output.write('**Model Performance Score Report**\n\n')
 
         output.write('### K-Fold Classification Report\n')
-        output.write('| K | Accuracy | Precision | Recall | F-Measure | AUC | Kappa |\n')
-        output.write('| --- | --- | --- | --- | --- | --- | --- |\n')
+        output.write('| K | RMSE | Log Loss | Accuracy | Precision | Recall | F-Measure | AUC | Kappa |\n')
+        output.write('| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n')
         for i in range(len(self.acc_list)):
             output.write('| ' + str(i+1) + ' | '
+                        + str(self.rmse_list[i]) + ' | '
+                        + str(self.logloss_list[i]) + ' | '
                         + str(self.acc_list[i]) + ' | '
                         + str(self.pre_list[i]) + ' | '
                         + str(self.rec_list[i]) + ' | '
@@ -87,9 +93,11 @@ class ScoreReport:
         output.write('| **True NEG** | ' + str(conf[0, 1])  + ' | '+ str(conf[0, 0]) + ' |\n')
 
         output.write('\n### Average Model Performance Metrics\n')
-        output.write('| ACC | PRE | REC | F1 | AUC | KAPP |\n')
-        output.write('| --- | --- | --- | --- | --- | --- |\n')
-        output.write('| ' + str(np.mean(self.acc_list)) +
+        output.write('| RMSE | LOGLOSS | ACC | PRE | REC | F1 | AUC | KAPP |\n')
+        output.write('| --- | --- | --- | --- | --- | --- | --- | --- |\n')
+        output.write('| ' + str(np.mean(self.rmse_list)) +
+                    ' | ' + str(np.mean(self.logloss_list)) +
+                    ' | ' + str(np.mean(self.acc_list)) +
                     ' | ' + str(np.mean(self.pre_list)) +
                     ' | ' + str(np.mean(self.rec_list)) +
                     ' | ' + str(np.mean(self.f1_list)) +
@@ -111,7 +119,7 @@ class ScoreReport:
         # Plot Mean AUC
         self.mean_tpr /= len(self.acc_list)
         self.mean_tpr[-1] = 1.0
-        mean_auc = met.auc(self.mean_fpr, self.mean_tpr)
+        mean_auc = np.mean(self.auc_score)
         plt.plot(self.mean_fpr, self.mean_tpr, 'k--', label='Mean ROC (area = %0.2f)' % mean_auc, lw=2)
         self.output_roc_csv(len(self.acc_list), self.mean_tpr, self.mean_fpr, True)
 
