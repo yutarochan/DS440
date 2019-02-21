@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import datetime as dt
 import gc; gc.enable()
-from astropy.io import ascii
+# from astropy.io import ascii
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -34,51 +34,38 @@ random.seed(9892)
 np.random.seed(9892)
 
 # Load Dataset
+print("-" * 100)
+print("Load Training File")
+print('> LOAD: kplr_dr25_inj1_plti.csv')
+core_df = pd.read_csv('data/raw/plti/kplr_dr25_inj1_plti.csv')
+
+feat_files = ['plti_add_numeric.csv', 'plti_divide_by_feature.csv',
+                'plti_divide_numeric.csv', 'plti_modulo_by_feature.csv',
+                'plti_multiply_numeric.csv', 'plti_subtract_numeric.csv']
+
+feat = ['KIC_ID', 'Sky_Group', 'i_period', 'i_epoch', 'N_Transit', 'i_depth', 'i_dur', 'i_b', 'i_ror', 'i_dor', 'Expected_MES']
+
+fdfs = []
+for f in feat_files:
+    print('> LOAD: ' + f)
+    fdfs.append(pd.read_csv('data/features/'+f))
+
+# Merge Data Frame
 print ("-" * 100)
-print ("Load Training File")
-data = pd.read_csv('data/feat_eng/plti_add_numeric.csv')
-data_2 = ascii.read('data/raw/plti/kplr_dr25_inj1_plti.txt').to_pandas()
+print ("Merge Datasets")
+df = fdfs[0]
+for i in range(1, len(fdfs)):
+    fdfs[i] = fdfs[i].drop(feat, axis=1)
+    df = pd.concat([df, fdfs[i]], axis=1)
 
-data['Recovered'] = data_2['Recovered']
+print('Final Dimension: ' + str(df.shape))
 
-# Separate Features and Target Values
+# Separate Feature and Target Variables
 print ("-" * 100)
 print ("Set X Features and y Target")
-feat = ['Sky_Group', 'i_period', 'i_epoch', 'N_Transit', 'i_depth', 'i_dur', 'i_b', 'i_ror', 'i_dor', 'Expected_MES']
-y = data['Recovered'].values
-
-data.drop(columns=['Recovered'])
-X = data
-names = X.columns
-
-print(X.head())
-
-# Perform Data Imputation and PCA Computations
-print ("-" * 100)
-print ("Perform Imputation and Scaling for PCA Calculations")
-for c in X.columns:
-    if X[c].dtype=='object':
-        X[c] = X[c].fillna(-999)
-        X[c] = pd.factorize(X[c], sort=True)[0]
-    else:
-        X[c] = X[c].astype('float64')
-        X[c] = X[c].fillna(-999)
-        rscaler = StandardScaler()
-        rscaler.fit(X[c].values.reshape(-1,1))
-        X[c] = rscaler.transform(X[c].values.reshape(-1,1))
-
-# Clean Up GC
-del data; gc.collect()
-
-# Compute PCA Components
-print ("-" * 100)
-print ("Compute for the PCA Components and Add into Data Set")
-# PCA --> 85% = 13 | 90% = 26 | 95% = 57
-pca = PCA(n_components=X.shape[1])
-X_pca = pd.DataFrame(pca.fit_transform(X))
-X_pca.columns = ['pca'+str(i) for i in range(1, X.shape[1]+1)]
-names = names.append(X_pca.columns)
-X_all = pd.concat([X, X_pca], axis=1)
+X = df.drop(['KIC_ID'], axis=1)
+y = core_df['Recovered'].values
+X_all = X
 
 # Compute Various Feature Importance Metrics
 print ("-" * 100)
@@ -107,7 +94,7 @@ for n_algo in ['rfr','ada','ext','gbm','rte']:
     print ('       Save:', n_algo)
     fi = sorted(zip(map(lambda x: round(x, 4), fi_model.feature_importances_), names), reverse=True)
     df_fi = pd.DataFrame.from_records(fi)
-    df_fi.to_csv('data/eda/plti/_' + n_algo + '_feature_importance.csv', sep=',')
+    df_fi.to_csv('data/feat_eng/plti/_' + n_algo + '_feature_importance.csv', sep=',')
 
 print ("-" * 100)
 print ("Perform Chi^2 Feature Selection and Save Results to File")
@@ -118,7 +105,7 @@ sel.transform(train_x2)
 df_univ = pd.DataFrame()
 df_univ["feature"] = [x for x in names]
 df_univ["score"] = [x**(1/2) for x in sel.scores_]
-df_univ.to_csv("data/eda/plti/_uni_feature_importance.csv", index=False)
+df_univ.to_csv("data/feat_eng/plti/_uni_feature_importance.csv", index=False)
 
 print ("-" * 100)
 print ("Perform Lasso Feature Selection and Save Results to File")
@@ -130,7 +117,7 @@ print ("   --> After Lasso Selection: %i" % lasso_sel.shape[1])
 df_lasso = pd.DataFrame()
 df_lasso["feature"] = [x for x in names]
 df_lasso["include"] = [1 if x==True else 0 for x in sel.get_support()]
-df_lasso.to_csv("data/eda/plti/_las_feature_selection.csv", index=False)
+df_lasso.to_csv("data/feat_eng/plti/_las_feature_selection.csv", index=False)
 
 print ("-" * 100)
 t1 = time.time()
