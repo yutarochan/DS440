@@ -29,8 +29,9 @@ class DataLoader:
     def load_data(self):
         # Load Raw Data
         print('>> Load Dataset: ' + self.plti)
-        raw_data = ascii.read(self.plti)
-        df = raw_data.to_pandas()
+        # raw_data = ascii.read(self.plti)
+        df = pd.read_csv('data/raw/plti/kplr_dr25_inj1_plti_sgmod.csv')
+        # df = raw_data.to_pandas()
         print(' > Data Shape: ' + str(df.shape))
 
         # Drop NA Data

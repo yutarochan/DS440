@@ -36,12 +36,14 @@ np.random.seed(9892)
 # Load Dataset
 print ("-" * 100)
 print ("Load Training File")
-data = ascii.read('data/raw/plti/kplr_dr25_inj1_plti.txt').to_pandas()
+# data = ascii.read('data/raw/plti/kplr_dr25_inj1_plti.txt').to_pandas()
+data = pd.read_csv('data/raw/plti/kplr_dr25_inj1_plti_sgmod.csv')
 
 # Separate Features and Target Values
 print ("-" * 100)
 print ("Set X Features and y Target")
-feat = ['Sky_Group', 'i_period', 'i_epoch', 'N_Transit', 'i_depth', 'i_dur', 'i_b', 'i_ror', 'i_dor', 'Expected_MES']
+feat = ['Sky_Group', 'i_period', 'i_epoch', 'N_Transit', 'i_depth', 'i_dur',
+            'i_b', 'i_ror', 'i_dor', 'Expected_MES', 'sg_center_pool', 'sg_corner_pool', 'sg_ori_pool']
 y = data['Recovered'].values
 
 data.drop(columns=['Recovered'])
