@@ -43,7 +43,7 @@ class Agent(BaseAgent):
 
     def train_model(self, X, y):
         print('> K FOLD')
-        model = AdaBoostClassifier(n_estimators=500)
+        model = AdaBoostClassifier(n_estimators=1000)
         model.fit(X, y)
         return model
 

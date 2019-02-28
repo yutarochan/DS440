@@ -42,7 +42,8 @@ class Agent(BaseAgent):
             self.report.append_result(y_actual, y_binary, y_prob)
 
     def train_model(self, X, y):
-        model = RandomForestClassifier()
+        print('> K FOLD')
+        model = RandomForestClassifier(n_estimators=1000)
         model.fit(X, y)
         return model
 

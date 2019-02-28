@@ -3,6 +3,8 @@ TPS Pipeline Efficiency Dataset
 Author: Yuya Jeremy Ong (yjo5006@psu.edu)
 '''
 from __future__ import print_function
+import math
+import random
 import pprint
 import numpy as np
 import pandas as pd
@@ -51,6 +53,7 @@ class DataLoader:
 
         print('-'*80)
         print('<Feature Engineering Process>')
+        if self.config.data['feat_trans']: X = self._feat_trans(X)
         if self.config.data['ifs']: X = self._impute(X)
         if self.config.data['pca']: X = self._compute_pca(X)
 
@@ -59,6 +62,17 @@ class DataLoader:
         print(' > y (shape): ' + str(y.shape))
 
         return X, y
+
+    def _feat_trans(self, X):
+        # Feature Transformations (Recommended Methods Suggested by Daniel Walker)
+        print('>> Custom Feature Transformations')
+        # X['i_dur'] = X['i_dur'].apply(lambda x: x**3)                                                         # Cube i_dur Feature
+        # X['i_b'] = X['i_b'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))                       # Take Log of i_b + Small Jitter Value for Domain
+        # X['i_ror'] = X['i_ror'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))                 # Take Log of i_ror + Small Jitter Value for Domain X
+        # X['i_depth'] = X['i_depth'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))               # Take Log of i_depth + Small Jitter Value for Domain
+        # X['Expected_MES'] = X['Expected_MES'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))
+
+        return X
 
     def _impute(self, X):
         print (">> Impute, Factorize, and Scale Features")

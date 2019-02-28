@@ -42,7 +42,7 @@ class Agent(BaseAgent):
             self.report.append_result(y_actual, y_binary, y_prob)
 
     def train_model(self, X, y):
-        model = CatBoostClassifier(custom_loss=['Accuracy'], random_seed=42, logging_level='Silent')
+        model = CatBoostClassifier(n_estimators=1000, custom_loss=['Accuracy'], random_seed=42, logging_level='Silent')
         model.fit(X, y)
         return model
 
