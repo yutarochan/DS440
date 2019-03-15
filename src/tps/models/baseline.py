@@ -43,6 +43,9 @@ class Agent(BaseAgent):
         # Train Model - No Training Required, Just KF Validation
         self.train(X, y)
 
+        # Generate Predictions
+        self.predict(X, y)
+
     def train(self, X, y):
         # Initialize KF-Cross Validation
         kf = KFold(n_splits=10)
@@ -67,6 +70,13 @@ class Agent(BaseAgent):
     def validate_model(self, model, X, y):
         y_prob = model.pred(X)
         y_binary = [0 if p <= 0.5 else 1 for p in y_prob]
+        return y, y_binary, y_prob
+
+    def predict(self, X, y):
+        model = GammaModel(self.config.a, self.config.b, self.config.c)
+        y_prob = model.pred(X)
+        y_binary = [0 if p <= 0.5 else 1 for p in y_prob]
+
         return y, y_binary, y_prob
 
     def finalize(self):

@@ -29,9 +29,9 @@ class DataLoader:
     def load_data(self):
         # Load Raw Data
         print('>> Load Dataset: ' + self.plti)
-        # raw_data = ascii.read(self.plti)
-        df = pd.read_csv('data/raw/plti/kplr_dr25_inj1_plti_sgmod.csv')
-        # df = raw_data.to_pandas()
+        raw_data = ascii.read(self.plti)
+        # df = pd.read_csv('data/raw/plti/kplr_dr25_inj1_plti_sgmod.csv')
+        df = raw_data.to_pandas()
         print(' > Data Shape: ' + str(df.shape))
 
         # Drop NA Data
@@ -67,8 +67,11 @@ class DataLoader:
     def _feat_trans(self, X):
         # Feature Transformations (Recommended Methods Suggested by Daniel Walker)
         print('>> Custom Feature Transformations')
-        # X['i_dur'] = X['i_dur'].apply(lambda x: x**3)                                                         # Cube i_dur Feature
+        # X['i_dur'] = X['i_dur'].apply(lambda x: x**3)                                                           # Cube i_dur Feature
         # X['i_b'] = X['i_b'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))                       # Take Log of i_b + Small Jitter Value for Domain
+        # X['i_depth'] = X[X['i_depth'] > 0.0] 
+
+
         # X['i_ror'] = X['i_ror'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))                 # Take Log of i_ror + Small Jitter Value for Domain X
         # X['i_depth'] = X['i_depth'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))               # Take Log of i_depth + Small Jitter Value for Domain
         # X['Expected_MES'] = X['Expected_MES'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))

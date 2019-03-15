@@ -45,17 +45,17 @@ class ScoreReport:
         self.tpr_list.append(tpr)
         self.fpr_list.append(fpr)
 
-        self.pre_list.append(met.precision_score(y_true, y_pred))
-        self.rec_list.append(met.recall_score(y_true, y_pred))
+        self.pre_list.append(met.precision_score(y_true, y_pred, average='weighted'))
+        self.rec_list.append(met.recall_score(y_true, y_pred, average='weighted'))
         self.kappa_list.append(met.cohen_kappa_score(y_true, y_pred))
 
         self.rmse_list.append(met.mean_squared_error(y_true, y_pred))
         self.logloss_list.append(met.log_loss(y_true, y_pred))
         self.acc_list.append(met.accuracy_score(y_true, y_pred))
-        self.f1_list.append(met.f1_score(y_true, y_pred, pos_label=1))
+        self.f1_list.append(met.f1_score(y_true, y_pred, pos_label=1, average='weighted'))
         self.avg_conf += np.array(met.confusion_matrix(y_true, y_pred))
         self.auc_list.append(met.auc(fpr, tpr))
-        self.auc_score.append(met.roc_auc_score(y_true, y_pred))
+        self.auc_score.append(met.roc_auc_score(y_true, y_pred, average='weighted'))
         self.mean_tpr += interp(self.mean_fpr, fpr, tpr)
         self.mean_tpr[0] = 0.0
 

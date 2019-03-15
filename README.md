@@ -43,3 +43,6 @@ Below are repositories found on Github which may be of use during our project.
 * https://github.com/mustaric/dr25CatalogGen
 * https://github.com/bmorris3/cks_spots
 * https://github.com/PALuczak/BusinessIntelligence
+
+## Useful Data Sources
+* https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=cumulative
