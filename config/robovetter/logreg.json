@@ -1,0 +1,16 @@
+{
+    "model": "logreg",
+    "out_dir": "log",
+
+    "data": {
+        "plti": "data/raw/tces/kplr_dr25_inj1_tces.txt",
+        "noise": "data/raw/misc/DR25_DEModel_NoisyTargetList.txt",
+
+        "features": ["sg_ori_pool", "sg_corner_pool", "i_period", "i_epoch", "N_Transit", "i_depth", "i_dur", "i_b", "i_ror", "i_dor", "Expected_MES"],
+
+        "feat_trans": true,
+        "ifs": true,
+        "pca": false,
+        "drop_noise": false
+    }
+}
