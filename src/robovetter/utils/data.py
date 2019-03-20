@@ -117,7 +117,11 @@ class DataLoader:
         return df
 
     def extract_features(self, df):
+        # Augment Target Value Encoding
+        df['Disp'].replace('FP', 0, inplace=True)
+        df['Disp'].replace('PC', 1, inplace=True)
+
         X = df[self.config.data['features']]
-        y = df['Recovered']
+        y = df['Disp']
 
         return X, y

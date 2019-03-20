@@ -38,15 +38,20 @@ print ("-" * 100)
 print ("Load Training File")
 data = ascii.read('data/raw/tces/kplr_dr25_inj1_tces.txt').to_pandas()
 
+# Augment Target Value Encoding
+data['Disp'].replace('FP', 0, inplace=True)
+data['Disp'].replace('PC', 1, inplace=True)
+
 # Separate Features and Target Values
 print ("-" * 100)
 print ("Set X Features and y Target")
-feat = ['Sky_Group', 'i_period', 'i_epoch', 'N_Transit', 'i_depth', 'i_dur',
-            'i_b', 'i_ror', 'i_dor', 'Expected_MES', 'sg_center_pool', 'sg_corner_pool', 'sg_ori_pool']
-y = data['Recovered'].values
+feat = ['Score', 'NTL', 'SS', 'CO', 'EM', 'period', 'epoch', 'Expected_MES', 'MES',
+        'NTran', 'depth', 'duration', 'Rp', 'Rs', 'Ts', 'logg', 'a', 'Rp/Rs', 'a/Rs',
+        'impact', 'SNR_DV', 'Sp', 'Fit_Prov']
+y = data['Disp'].values
 
-data.drop(columns=['Recovered'])
-X = data
+data.drop(columns=['Disp'])
+X = data[feat]
 names = X.columns
 
 print(X.head())
@@ -69,6 +74,7 @@ for c in X.columns:
 del data; gc.collect()
 
 # Compute PCA Components
+'''
 print ("-" * 100)
 print ("Compute for the PCA Components and Add into Data Set")
 # PCA --> 85% = 13 | 90% = 26 | 95% = 57
@@ -77,6 +83,8 @@ X_pca = pd.DataFrame(pca.fit_transform(X))
 X_pca.columns = ['pca'+str(i) for i in range(1, X.shape[1]+1)]
 names = names.append(X_pca.columns)
 X_all = pd.concat([X, X_pca], axis=1)
+'''
+X_all = X
 
 # Compute Various Feature Importance Metrics
 print ("-" * 100)
@@ -105,7 +113,7 @@ for n_algo in ['rfr','ada','ext','gbm','rte']:
     print ('       Save:', n_algo)
     fi = sorted(zip(map(lambda x: round(x, 4), fi_model.feature_importances_), names), reverse=True)
     df_fi = pd.DataFrame.from_records(fi)
-    df_fi.to_csv('data/feat_eng/plti/_' + n_algo + '_feature_importance.csv', sep=',')
+    df_fi.to_csv('data/feat_eng/rv/_' + n_algo + '_feature_importance.csv', sep=',')
 
 print ("-" * 100)
 print ("Perform Chi^2 Feature Selection and Save Results to File")
@@ -116,7 +124,7 @@ sel.transform(train_x2)
 df_univ = pd.DataFrame()
 df_univ["feature"] = [x for x in names]
 df_univ["score"] = [x**(1/2) for x in sel.scores_]
-df_univ.to_csv("data/feat_eng/plti/_uni_feature_importance.csv", index=False)
+df_univ.to_csv("data/feat_eng/rv/_uni_feature_importance.csv", index=False)
 
 print ("-" * 100)
 print ("Perform Lasso Feature Selection and Save Results to File")
@@ -128,7 +136,7 @@ print ("   --> After Lasso Selection: %i" % lasso_sel.shape[1])
 df_lasso = pd.DataFrame()
 df_lasso["feature"] = [x for x in names]
 df_lasso["include"] = [1 if x==True else 0 for x in sel.get_support()]
-df_lasso.to_csv("data/feat_eng/plti/_las_feature_selection.csv", index=False)
+df_lasso.to_csv("data/feat_eng/rv/_las_feature_selection.csv", index=False)
 
 print ("-" * 100)
 t1 = time.time()

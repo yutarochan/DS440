@@ -21,9 +21,9 @@ def main():
     config, logger = parse_config(args.config)
 
     # Initialize Model Agent
-    # agent = eval(config.model).Agent(config, logger)
-    # agent.run()
-    # agent.finalize()
+    agent = eval(config.model).Agent(config, logger)
+    agent.run()
+    agent.finalize()
 
 if __name__ == '__main__':
     main()

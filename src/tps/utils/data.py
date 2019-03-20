@@ -30,7 +30,6 @@ class DataLoader:
         # Load Raw Data
         print('>> Load Dataset: ' + self.plti)
         raw_data = ascii.read(self.plti)
-        # df = pd.read_csv('data/raw/plti/kplr_dr25_inj1_plti_sgmod.csv')
         df = raw_data.to_pandas()
         print(' > Data Shape: ' + str(df.shape))
 
@@ -69,7 +68,7 @@ class DataLoader:
         print('>> Custom Feature Transformations')
         # X['i_dur'] = X['i_dur'].apply(lambda x: x**3)                                                           # Cube i_dur Feature
         # X['i_b'] = X['i_b'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))                       # Take Log of i_b + Small Jitter Value for Domain
-        # X['i_depth'] = X[X['i_depth'] > 0.0] 
+        # X['i_depth'] = X[X['i_depth'] > 0.0]
 
 
         # X['i_ror'] = X['i_ror'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))                 # Take Log of i_ror + Small Jitter Value for Domain X
