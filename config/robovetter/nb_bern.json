@@ -1,5 +1,5 @@
 {
-    "model": "logreg",
+    "model": "nb_bern",
     "out_dir": "log",
 
     "data": {
@@ -12,5 +12,7 @@
         "ifs": true,
         "pca": false,
         "drop_noise": false
-    }
+    },
+
+    "nb_type": "gaussian"
 }

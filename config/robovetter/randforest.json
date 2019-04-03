@@ -1,5 +1,5 @@
 {
-    "model": "logreg",
+    "model": "randforest",
     "out_dir": "log",
 
     "data": {

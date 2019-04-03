@@ -1,5 +1,5 @@
 {
-    "model": "logreg",
+    "model": "MLP",
     "out_dir": "log",
 
     "data": {
