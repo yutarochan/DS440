@@ -6,7 +6,7 @@
         "plti": "data/raw/tces/kplr_dr25_inj1_tces.txt",
         "noise": "data/raw/misc/DR25_DEModel_NoisyTargetList.txt",
 
-        "features": ["period", "epoch", "Expected_MES", "NTran", "depth", "duration", "Rp", "Rs", "Ts", "logg", "a", "Rp/Rs", "a/Rs", "impact", "SNR_DV", "Sp", "Fit_Prov"],
+        "features": ["period", "epoch", "Expected_MES", "NTran", "depth", "duration", "Rp", "Rs", "Ts", "logg", "a", "Rp/Rs", "a/Rs", "impact", "SNR_DV", "Fit_Prov"],
 
         "feat_trans": false,
         "ifs": true,
