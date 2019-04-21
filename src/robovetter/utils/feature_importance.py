@@ -45,7 +45,7 @@ data['Disp'].replace('PC', 1, inplace=True)
 # Separate Features and Target Values
 print ("-" * 100)
 print ("Set X Features and y Target")
-feat = ['Score', 'NTL', 'SS', 'CO', 'EM', 'period', 'epoch', 'Expected_MES', 'MES',
+feat = ['period', 'epoch', 'Expected_MES',
         'NTran', 'depth', 'duration', 'Rp', 'Rs', 'Ts', 'logg', 'a', 'Rp/Rs', 'a/Rs',
         'impact', 'SNR_DV', 'Sp', 'Fit_Prov']
 y = data['Disp'].values

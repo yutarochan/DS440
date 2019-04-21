@@ -3,6 +3,7 @@ TPS Pipeline Efficiency Dataset
 Author: Yuya Jeremy Ong (yjo5006@psu.edu)
 '''
 from __future__ import print_function
+import sys
 import math
 import random
 import pprint
@@ -65,16 +66,16 @@ class DataLoader:
         return X, y
 
     def _feat_trans(self, X):
-        # Feature Transformations (Recommended Methods Suggested by Daniel Walker)
-        # print('>> Custom Feature Transformations')
-        # X['i_dur'] = X['i_dur'].apply(lambda x: x**3)                                                           # Cube i_dur Feature
-        # X['i_b'] = X['i_b'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))                       # Take Log of i_b + Small Jitter Value for Domain
-        # X['i_depth'] = X[X['i_depth'] > 0.0]
-
-
-        # X['i_ror'] = X['i_ror'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))                 # Take Log of i_ror + Small Jitter Value for Domain X
-        # X['i_depth'] = X['i_depth'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))               # Take Log of i_depth + Small Jitter Value for Domain
-        # X['Expected_MES'] = X['Expected_MES'].apply(lambda x: math.log(x+random.uniform(0.00001, 0.00002)))
+        # Feature Transformations
+        print('>> Custom Feature Transformations')
+        #                                                                 Baseline              [0.8573]
+        # X['NTran'] = X['NTran'].transform(np.log)                     # Log Transform NTran   [0.8575]
+        # X['depth'] = X['depth'].transform(lambda x: np.log(x+1))      # Log Transform Depth   [0.8576]
+        # X['Rs'] = X['Rs'].transform(np.log)                           # Log Transform Rs      [0.8575]
+        X['Ts'] = X['Ts'].transform(np.log)                             # Log Transform Ts      [0.8593]
+        # X['a/Rs'] = X['a/Rs'].transform(np.log)                       # Log Transform a/Rs    [0.8574]
+        # X['impact'] = X['impact'].transform(np.log)                    # Log Transform impact  [0.8574]
+        X['SNR_DV'] = X['SNR_DV'].transform(lambda x: np.log(x+2))      # Log Transform impact  [0.8580]
 
         return X
 
@@ -112,7 +113,8 @@ class DataLoader:
 
         # print(drop_id[0])
         for d in drop_id:
-            if d in df.KIC_ID: df.drop(d)
+            if d in df.KIC: df.drop(d)
+
         print(' > Data Shape: ' + str(df.shape))
         return df
 

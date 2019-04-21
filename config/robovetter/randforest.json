@@ -1,5 +1,5 @@
 {
-    "model": "logreg",
+    "model": "randforest",
     "out_dir": "log",
 
     "data": {
@@ -7,7 +7,6 @@
         "noise": "data/raw/misc/DR25_DEModel_NoisyTargetList.txt",
 
         "features": ["period", "epoch", "Expected_MES", "NTran", "depth", "duration", "Rp", "Rs", "Ts", "logg", "a", "Rp/Rs", "a/Rs", "impact", "SNR_DV", "Sp", "Fit_Prov"],
-        
 
         "feat_trans": true,
         "ifs": true,
