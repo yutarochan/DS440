@@ -160,7 +160,7 @@ class AnchorTabularExplainer(object):
         instance = exp['instance']
         predicted_label = exp['prediction']
         predict_proba = np.zeros(len(self.class_names))
-        predict_proba[predicted_label] = 1
+        predict_proba[int(predicted_label)] = 1
 
         examples_obj = []
         for i, temp in enumerate(exp['examples'], start=1):
